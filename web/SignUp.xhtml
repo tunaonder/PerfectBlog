@@ -7,63 +7,42 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
            <ui:composition template="templates/siteTemplate.xhtml">
 
-            <!-- Create the content for this page below -->
             <ui:define name="editableContent">
-                <!-- Custom style to enable proper footer alignment on pages without sidebar -->
-                <style>body {height: auto;}</style>
                 <div align="center">
                     <h:form class="form-signin">
-                        <!--Checks if password and confirm password matches-->
-                         <f:event listener="#{accountManager.validateInformation}" type="postValidate"/>
                         <div align="center">
                         <h:graphicImage url="#{resource['images:perfectLogo.png']}" styleClass="login-logo" alt="Perfect Blog"/>
 
-                        <!-- Each column in panel grid has different styling-->
-                        <h:panelGrid columns="3" cellpadding="5" columnClasses="signup-label, signup-input, signup-message">
-                            <p:outputLabel for="firstName" value="First Name" styleClass="outputLabel"/>
-                            <h:inputText id="firstName" class="form-control"
-                                         required="true" value="#{accountManager.firstName}" >
-                                <f:validateLength minimum="2" maximum="32" />
-                            </h:inputText>
-                            <p:message for="firstName" display="icon" />                  
 
-                            <p:outputLabel for="lastName" value="Last Name" styleClass="outputLabel"/>
-                            <h:inputText id="lastName" class="form-control"
-                                         required="true" value="#{accountManager.lastName}" >
-                                <f:validateLength minimum="2" maximum="32" />
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="firstName" value="First Name: " styleClass="outputLabel"/>
+                            <h:inputText id="firstName" class="form-control" value="#{accountManager.firstName}" >
+                            </h:inputText>                
+
+                            <p:outputLabel for="lastName" value="Last Name: " styleClass="outputLabel"/>
+                            <h:inputText id="lastName" class="form-control" value="#{accountManager.lastName}" >
                             </h:inputText>
-                            <p:message for="lastName" display="icon" />
                             
-                            <p:outputLabel for="username" value="Username" />
-                            <h:inputText id="username" class="form-control"
-                                          required="true" value="" >
-                                <f:validateLength minimum="4" maximum="64" />
+                            <p:outputLabel for="username" value="Username: " />
+                            <h:inputText id="username" class="form-control" value="#{accountManager.username}" >
                             </h:inputText>
-                            <p:message for="username" display="icon" />
                                                                          
-                            <p:outputLabel for="password" value="Password" styleClass="outputLabel"/>
-                            <!-- Password must be validated to provide highest secuirty-->
-                            <h:inputSecret id="password" class="form-control"
-                                           required="true" value="#{accountManager.password}" >
+                            <p:outputLabel for="password" value="Password: " styleClass="outputLabel"/>
+                            <h:inputSecret id="password" class="form-control" value="#{accountManager.password}" >
                             </h:inputSecret>
-                            <p:message for="password" display="icon" />
-
-                            <p:outputLabel for="confirmPassword" value="Confirm Password" styleClass="outputLabel"/>
-                            <h:inputSecret id="confirmPassword" class="form-control"
-                                        required="true">
+                            
+                             <p:outputLabel for="confirmPassword" value="Confirm Password: " />
+                            <h:inputSecret id="confirmPassword" value="#{accountManager.confirmPassword}" class="form-control">
                             </h:inputSecret>
-                            <p:message for="confirmPassword" display="icon"/>
                         </h:panelGrid>
                         <br/>
-                        <h:commandButton id="signUpButton" value="Create Account" styleClass="btn login-btn"/>
-                        <h:commandButton id="signUpCancelButton" value="Cancel" styleClass="btn login-btn"/>  
+                        <h:commandButton id="signUpButton" value="Create Account" action="#{accountManager.createAccount()}" styleClass="btn login-btn"/>
+                        <h:commandButton id="signUpCancelButton" value="Cancel"  action="#{accountManager.showHomePage()}" styleClass="btn login-btn"/>  
                         </div>
                         <br/>
-                        <!--Display status message if correct password is not entered-->
                         <h:outputLabel value ="#{accountManager.statusMessage}" />
                     </h:form>
                 </div>

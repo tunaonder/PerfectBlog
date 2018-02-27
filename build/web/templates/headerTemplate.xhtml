@@ -6,7 +6,8 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
         <div id="headerDiv">
             <h:form>
@@ -14,16 +15,26 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
                     <tr>
                         <td align="left" valign="middle">
                             <a href="index.xhtml">
-                                <img src="resources/images/perfectLogo.png"
-                                     id="logoImage"/></a>
-
+                                <img src="resources/images/perfectLogo.png" id="logoImage"/></a>
                         </td>
                         <td align="center" valign="middle">
-                            <h3 style="color: white;">Hello, Guest</h3>
+
+                            <c:if test="#{accountManager.isLoggedIn() == true}">
+                                <label style="color: white;">Hello, #{accountManager.selected.firstName}</label>
+                            </c:if>
+                            <c:if test="#{accountManager.isLoggedIn() == false}">\
+                                <label style="color: white;">Hello, Guest</label>
+                            </c:if>
                         </td>
                         <td align="right" valign="middle">
-                            <h:button id="login"  value="Login" outcome="Login" styleClass="btn btn-custom btn-nav"/>
-                            <h:button id="signUp"  value="Sign Up" outcome="SignUp" styleClass="btn btn-custom btn-nav"/>
+                            <c:if test="#{accountManager.isLoggedIn() == false}">           
+                                <h:button id="login"  value="Login" outcome="Login" styleClass="btn btn-custom btn-nav"/>
+                                <h:button id="signUp"  value="Sign Up" outcome="SignUp" styleClass="btn btn-custom btn-nav"/>
+                            </c:if>
+                            <c:if test="#{accountManager.isLoggedIn() == true}">
+                                <h:button id="newPost"  value="New Post!" outcome="NewPost" styleClass="btn btn-custom btn-nav"/>
+                                <h:commandButton id="logout"  value="Logout" action="#{accountManager.logout()}" styleClass="btn btn-custom btn-nav"/>
+                            </c:if>                         
                         </td>
                     </tr>
                 </table>

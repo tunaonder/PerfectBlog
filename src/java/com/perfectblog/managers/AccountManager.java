@@ -26,6 +26,7 @@ import javax.inject.Named;
 public class AccountManager implements Serializable {
     
     private String password;
+    private String confirmPassword;
     private String firstName;
     private String lastName;
     private String username;
@@ -47,6 +48,16 @@ public class AccountManager implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+    
+    
 
     public String getFirstName() {
         return firstName;
@@ -125,7 +136,18 @@ public class AccountManager implements Serializable {
      */
     public String createAccount() {
         
-        // First, check if the entered username is already being used
+        statusMessage = "";
+        
+        if(firstName.length() == 0 || lastName.length() == 0 || 
+                username.length() == 0 || password.length() == 0 || confirmPassword.length() == 0){
+            statusMessage = "Please fill all fields!";
+            return "";
+        }
+        
+        if(!password.equals(confirmPassword)){
+            statusMessage = "Passwords don't match!";
+            return "";
+        }
 
         // Obtain the object reference of a User object with username
         User aUser = getUserFacade().findByUsername(username);
@@ -136,8 +158,6 @@ public class AccountManager implements Serializable {
             statusMessage = "Username already exists! Please select a different one!";
             return "";
         }
-        
-        // The entered email is available
 
         if (statusMessage == null || statusMessage.isEmpty()) {
             try {
@@ -163,7 +183,7 @@ public class AccountManager implements Serializable {
             // Initialize the session map for the newly created User object
             initializeSessionMap();
 
-            return "SignIn.xhtml?faces-redirect=true";
+            return "Login.xhtml?faces-redirect=true";
         }
         return "";
     }

@@ -9,7 +9,7 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
 
 #headerDiv{
     background-color: #202020;
-    height: 60px;
+    height: 50px;
 
 }
 
@@ -40,7 +40,7 @@ div.footer .footer-text {
     margin-bottom: 0;
 }
 
-/*Login Page Styling*/
+/*Login-Sign Up Page Styling*/
 
 .login-logo {
     margin-top: 100px;
@@ -54,5 +54,9 @@ div.footer .footer-text {
 }
 
 .outputLabel{
-    margin-top: 10px;
+    margin-top: 20px;
+}
+
+.signup-input{
+    margin-top: 20px;
 }
