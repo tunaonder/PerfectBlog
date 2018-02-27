@@ -40,3 +40,19 @@ div.footer .footer-text {
     margin-bottom: 0;
 }
 
+/*Login Page Styling*/
+
+.login-logo {
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.login-btn{
+    color: white;
+    background-color: #202020;
+    margin-left: 10px;
+}
+
+.outputLabel{
+    margin-top: 10px;
+}
