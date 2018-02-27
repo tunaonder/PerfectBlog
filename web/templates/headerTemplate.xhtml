@@ -4,12 +4,32 @@ Created by Sait Tuna Onder on 2018.02.26
 Copyright © 2018 Sait Tuna Onder. All rights reserved.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:composition>
+        <div id="headerDiv">
+            <h:form>
+                <table  width="100%">
+                    <tr>
+                        <td align="left" valign="middle">
+                            <a href="index.xhtml">
+                                <img src="resources/images/perfectLogo.png"
+                                     id="logoImage"/></a>
+
+                        </td>
+                        <td align="center" valign="middle">
+                            <h3 style="color: white;">Hello, Guest</h3>
+                        </td>
+                        <td align="right" valign="middle">
+                            <h:button id="login"  value="Login" outcome="Login" styleClass="btn btn-custom btn-nav"/>
+                            <h:button id="signUp"  value="Sign Up" outcome="SignUp" styleClass="btn btn-custom btn-nav"/>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+
+        </div>
+
+    </ui:composition>
 </html>
