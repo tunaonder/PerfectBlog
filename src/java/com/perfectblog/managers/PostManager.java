@@ -68,19 +68,19 @@ public class PostManager implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
     public String clearErrorMessage() {
         message = "";
         return "NewPost?faces-redirect=true";
     }
 
     // Handle the upload of the selected file
-    public String upload() {
+    public void upload() {
 
         // Check if a file is selected
         if (file.getSize() == 0) {
             message = "You need to choose a file first!";
-            return "";
+            return;
         }
 
         String mimeFileType = file.getContentType();
@@ -96,27 +96,26 @@ public class PostManager implements Serializable {
 
             String fileExtensionInCaps = fileExtension.toUpperCase();
 
-            if (fileExtensionInCaps.endsWith("JPG") || fileExtensionInCaps.endsWith("JPEG") 
+            if (fileExtensionInCaps.endsWith("JPG") || fileExtensionInCaps.endsWith("JPEG")
                     || fileExtensionInCaps.endsWith("PNG") || fileExtensionInCaps.endsWith("GIF")) {
                 // File type is acceptable
             } else {
                 message = "Selected file type is not a JPG, JPEG, PNG, or GIF!";
-                return "";
+                return;
             }
         } else {
             message = "Selected file to upload must be an image file of type JPG, JPEG, PNG or GIF!";
-            return "";
+            return;
         }
 
         storePhotoFile(file);
-        message = "";
-
-        return "index?faces-redirect=true";
+        message = "Post Successfully Uploaded!";
     }
 
     // Cancel file upload
     public String cancel() {
         message = "";
+        postText = "";
         return "index?faces-redirect=true";
     }
 
@@ -143,9 +142,9 @@ public class PostManager implements Serializable {
             // Obtain the object reference of the logged-in User object
             User user = userFacade.findByUsername(user_name);
 
-            String uniqueFileName = user.getId() + "_" + 
-                    postFacade.findPostsByUserID(user.getId()).size() + "_" + file.getFileName();
-                    
+            String uniqueFileName = user.getId() + "_"
+                    + postFacade.findPostsByUserID(user.getId()).size() + "_" + file.getFileName();
+
             Post newPost = new Post();
             newPost.setPostText(postText);
             newPost.setImageFileName(uniqueFileName);
@@ -153,9 +152,9 @@ public class PostManager implements Serializable {
 
             postFacade.create(newPost);
 
-            List<Post> photoList = postFacade.findPostsByUserID(user.getId());
-            
-            Post post = photoList.get(photoList.size()-1);
+            List<Post> postList = postFacade.findPostsByUserID(user.getId());
+
+            Post post = postList.get(postList.size() - 1);
 
             // Reconvert the uploaded file into an input stream of bytes.
             inputStream = file.getInputstream();
@@ -176,7 +175,8 @@ public class PostManager implements Serializable {
     }
 
     /**
-     * @param inputStream of bytes to be written into file with name targetFilename
+     * @param inputStream of bytes to be written into file with name
+     * targetFilename
      * @param targetFilename
      * @return the created file targetFile
      * @throws IOException
@@ -221,6 +221,32 @@ public class PostManager implements Serializable {
 
     public void setPostText(String postText) {
         this.postText = postText;
+    }
+
+    public String displayPosts() {
+        
+        StringBuilder htmlBuilder = new StringBuilder();
+        List<Post> postList = postFacade.findAll();
+        for(int i=0; i < postList.size(); i++){
+            Post post = postList.get(i);
+            
+            String userInfo = "Posted By: " +  post.getUserId().getFirstName() + " " + post.getUserId().getLastName();
+            String imageInfo = "<img style=\"height: 300px; display: block; width: auto; align: center;\""
+                    + "src=\""+ post.getImagePath() + "\"/>";
+            System.out.println(imageInfo);
+            
+            htmlBuilder.append("<br/>");
+            htmlBuilder.append("<p>"+ userInfo + "</p>");
+            htmlBuilder.append("<br/>");
+            htmlBuilder.append(imageInfo);           
+            htmlBuilder.append("<textarea style=\"margin-top: 10px; border: none;\" rows=\"20\" cols=\"70\">"+ post.getPostText()+"</textArea>");
+            htmlBuilder.append("<br/>");
+            
+        }
+        
+        
+        return htmlBuilder.toString();
+
     }
 
 }

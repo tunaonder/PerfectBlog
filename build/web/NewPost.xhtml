@@ -23,12 +23,12 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
                     <p:fileUpload id="file" value="#{postManager.file}" mode="simple" />
                     <br/>
                     <br/>
-                    <p:commandButton id="upload" value="Upload" ajax="false" styleClass="commandButton"
+                    <p:commandButton id="upload" value="Send Your Post" ajax="false" styleClass="commandButton"
                                      action="#{postManager.upload()}" icon="ui-icon-arrowthick-1-n" />
                     <br/>
                     <h:outputText styleClass="errorMessages" value="#{postManager.message}" />
                     <br/>
-                    <p:commandButton id="cancel" value="Cancel" ajax="false" styleClass="commandButton"
+                    <p:commandButton id="cancel" value="View Blog Posts" ajax="false" styleClass="commandButton"
                                      action="#{postManager.cancel()}" icon="ui-icon-cancel" />
 
                 </h:form>

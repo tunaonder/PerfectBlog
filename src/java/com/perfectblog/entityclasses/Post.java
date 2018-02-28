@@ -142,7 +142,7 @@ public class Post implements Serializable {
     }
     
      public String getImagePath() {
-        return Constants.FILES_ABSOLUTE_PATH + getImageFileName();
+        return Constants.FILES_RELATIVE_PATH + getImageFileName();
     }
 
 }

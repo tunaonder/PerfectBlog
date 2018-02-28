@@ -29,11 +29,9 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
 div.footer {
     background-color: #202020;
     color: white;
-    height: 20px;
-    position: absolute;
+    height: 20px;   
     left: 0;
     right: 0;
-    bottom: 0;
 }
 
 div.footer .footer-text {
