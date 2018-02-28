@@ -30,11 +30,6 @@ public class LoginManager implements Serializable {
     private String password;
     private String errorMessage;
 
-    /*
-    The instance variable 'userFacade' is annotated with the @EJB annotation.
-    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
-    of the UserFacade object, after it is instantiated at runtime, into the instance variable 'userFacade'.
-     */
     @EJB
     private UserFacade userFacade;
 

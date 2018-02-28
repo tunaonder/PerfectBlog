@@ -151,11 +151,8 @@ public class PostManager implements Serializable {
             newPost.setImageFileName(uniqueFileName);
             newPost.setUserId(user);
 
-            // Create a record for the new Photo object in the database
             postFacade.create(newPost);
 
-            // Obtain the object reference of the first Photo object of the
-            // user whose primary key is user.getId()
             List<Post> photoList = postFacade.findPostsByUserID(user.getId());
             
             Post post = photoList.get(photoList.size()-1);
@@ -163,8 +160,6 @@ public class PostManager implements Serializable {
             // Reconvert the uploaded file into an input stream of bytes.
             inputStream = file.getInputstream();
 
-            // Write the uploaded file's input stream of bytes under the photo object's
-            // filename using the inputStreamToFile method given below
             inputStreamToFile(inputStream, post.getImageFileName());
 
             // Compose the result message
