@@ -4,6 +4,7 @@
  */
 package com.perfectblog.entityclasses;
 
+import com.perfectblog.managers.Constants;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -31,6 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Post")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Post.findPostsByUserID", query = "SELECT p FROM Post p WHERE p.userId.id = :userId")
+    ,
     @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p")
     , @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = :id")
     , @NamedQuery(name = "Post.findByPostText", query = "SELECT p FROM Post p WHERE p.postText = :postText")
@@ -138,4 +141,8 @@ public class Post implements Serializable {
         return "com.perfectblog.entityclasses.Post[ id=" + id + " ]";
     }
     
+     public String getImagePath() {
+        return Constants.FILES_ABSOLUTE_PATH + getImageFileName();
+    }
+
 }
