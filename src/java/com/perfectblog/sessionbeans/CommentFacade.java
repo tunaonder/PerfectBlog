@@ -5,6 +5,8 @@
 package com.perfectblog.sessionbeans;
 
 import com.perfectblog.entityclasses.Comment;
+import com.perfectblog.entityclasses.Post;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +29,11 @@ public class CommentFacade extends AbstractFacade<Comment> {
     public CommentFacade() {
         super(Comment.class);
     }
-    
+
+    public List<Comment> findCommentsByPostId(Integer postID) {
+
+        return (List<Comment>) em.createNamedQuery("Comment.findCommentsByPostId")
+                .setParameter("postId", postID)
+                .getResultList();
+    }
 }

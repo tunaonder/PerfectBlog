@@ -4,8 +4,10 @@
  */
 package com.perfectblog.managers;
 
+import com.perfectblog.entityclasses.Comment;
 import com.perfectblog.entityclasses.Post;
 import com.perfectblog.entityclasses.User;
+import com.perfectblog.sessionbeans.CommentFacade;
 import com.perfectblog.sessionbeans.PostFacade;
 import com.perfectblog.sessionbeans.UserFacade;
 import java.io.File;
@@ -34,7 +36,8 @@ public class PostManager implements Serializable {
     private UploadedFile file;
     private String message = "";
     private String postText = "";
-
+    int clickedPostId = 0;
+    private String newComment = "";
     /*
     The @EJB annotation implies that the EJB container will perform an injection of the object
     reference of the UserFacade object into userFacade when it is created at runtime.
@@ -48,6 +51,9 @@ public class PostManager implements Serializable {
      */
     @EJB
     private PostFacade postFacade;
+
+    @EJB
+    private CommentFacade commentFacade;
 
     // Returns the uploaded file
     public UploadedFile getFile() {
@@ -223,30 +229,107 @@ public class PostManager implements Serializable {
         this.postText = postText;
     }
 
+    public int getClickedPostId() {
+        return clickedPostId;
+    }
+
+    public void setClickedPostId(int clickedPostId) {
+        this.clickedPostId = clickedPostId;
+    }
+
+    public String getNewComment() {
+        return newComment;
+    }
+
+    public void setNewComment(String newComment) {
+        this.newComment = newComment;
+    }
+
     public String displayPosts() {
-        
+
         StringBuilder htmlBuilder = new StringBuilder();
         List<Post> postList = postFacade.findAll();
-        for(int i=0; i < postList.size(); i++){
+        for (int i = 0; i < postList.size(); i++) {
             Post post = postList.get(i);
-            
-            String userInfo = "Posted By: " +  post.getUserId().getFirstName() + " " + post.getUserId().getLastName();
+
+            String userInfo = "Posted By: " + post.getUserId().getFirstName() + " " + post.getUserId().getLastName();
             String imageInfo = "<img style=\"height: 300px; display: block; width: auto; align: center;\""
-                    + "src=\""+ post.getImagePath() + "\"/>";
-            System.out.println(imageInfo);
-            
+                    + "src=\"" + post.getImagePath() + "\"/>";
+            String jsMethod = "<div onclick=\"postClicked(" + i + ");\" style=\"cursor: pointer;\">";
+
+            htmlBuilder.append(jsMethod);
             htmlBuilder.append("<br/>");
-            htmlBuilder.append("<p>"+ userInfo + "</p>");
+            htmlBuilder.append("<p>" + userInfo + "</p>");
             htmlBuilder.append("<br/>");
-            htmlBuilder.append(imageInfo);           
-            htmlBuilder.append("<textarea style=\"margin-top: 10px; border: none;\" rows=\"20\" cols=\"70\">"+ post.getPostText()+"</textArea>");
+            htmlBuilder.append(imageInfo);
+            htmlBuilder.append("<textarea style=\"margin-top: 10px; border: none;\" rows=\"20\" cols=\"70\">" + post.getPostText() + "</textArea>");
             htmlBuilder.append("<br/>");
-            
+            htmlBuilder.append("<br/></div>");
         }
-        
-        
+
         return htmlBuilder.toString();
 
+    }
+
+    public String displaySinglePost(int i) {
+
+        StringBuilder htmlBuilder = new StringBuilder();
+        List<Post> postList = postFacade.findAll();
+        Post post = postList.get(i);
+
+        String userInfo = "Posted By: " + post.getUserId().getFirstName() + " " + post.getUserId().getLastName();
+        String imageInfo = "<img style=\"height: 300px; display: block; width: auto; align: center;\""
+                + "src=\"" + post.getImagePath() + "\"/>";
+        String jsMethod = "<div onclick=\"postClicked(" + i + ");\" style=\"cursor: pointer;\">";
+
+        htmlBuilder.append(jsMethod);
+        htmlBuilder.append("<br/>");
+        htmlBuilder.append("<p>" + userInfo + "</p>");
+        htmlBuilder.append("<br/>");
+        htmlBuilder.append(imageInfo);
+        htmlBuilder.append("<textarea style=\"margin-top: 10px; border: none;\" rows=\"20\" cols=\"70\">" + post.getPostText() + "</textArea>");
+        htmlBuilder.append("<br/>");
+        htmlBuilder.append("<br/></div>");
+
+        List<Comment> commentList = commentFacade.findCommentsByPostId(i+1);
+        
+        for (int j = 0; j < commentList.size(); j++) {
+            Comment com = commentList.get(j);
+            
+            String commentOwnerInfo = "<b>" + com.getUserId().getFirstName() + " " + com.getUserId().getLastName()+ ": </b>";            
+            htmlBuilder.append("<p>" + commentOwnerInfo + " ");
+            htmlBuilder.append(com.getCommentText() + "</p>");
+            htmlBuilder.append("<br/>");
+
+        }
+
+        return htmlBuilder.toString();
+
+    }
+
+    public String addComment() {
+
+        String user_name = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        // Obtain the object reference of the logged-in User object
+        User user = userFacade.findByUsername(user_name);
+
+        if (user == null) {
+            return "ReadPost?faces-redirect=true";
+        }
+
+        List<Post> postList = postFacade.findAll();
+        Post post = postList.get(clickedPostId);
+
+        Comment comment = new Comment();
+        comment.setCommentText(newComment);
+        comment.setPostId(post);
+        comment.setUserId(user);
+
+        commentFacade.create(comment);
+        newComment = "";
+        return "ReadPost?faces-redirect=true";
     }
 
 }

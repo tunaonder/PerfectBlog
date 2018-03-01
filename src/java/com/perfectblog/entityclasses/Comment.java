@@ -28,6 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Comment")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Comment.findCommentsByPostId", query = "SELECT c FROM Comment c WHERE c.postId.id = :postId")
+    ,
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c")
     , @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id")
     , @NamedQuery(name = "Comment.findByCommentText", query = "SELECT c FROM Comment c WHERE c.commentText = :commentText")})

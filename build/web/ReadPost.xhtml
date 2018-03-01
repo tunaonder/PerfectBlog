@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Sait Tuna Onder on 2018.02.28 
+Copyright © 2018 Sait Tuna Onder. All rights reserved.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="templates/siteTemplate.xhtml">
+
+        <ui:define name="editableContent">
+            <div align="center">
+                <script>
+                    var myData = localStorage['objectToPass'];
+                    document.getElementById("postInput").value = myData;
+                    alert(document.getElementById("postInput").value);
+
+                </script> 
+                <h:inputHidden id="postInput" binding="#{input1}"/>   
+                <h:outputText value="#{postManager.displaySinglePost(input1.value)}" escape="false" />
+
+
+                <h:form enctype="multipart/form-data">
+                    <h4 >Add Comment</h4>
+                    <p:inputTextarea style="margin-top: 20px;" rows="4" cols="70" value="#{postManager.newComment}" />
+                    <br/>
+                    <p:commandButton id="uploadComment" value="Send" ajax="false" styleClass="commandButton"
+                                     action="#{postManager.addComment()}" />
+                </h:form>
+                <br/>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

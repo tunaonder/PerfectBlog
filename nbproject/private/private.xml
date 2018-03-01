@@ -12,18 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/web/ReadPost.xhtml</file>
             <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/managers/PostManager.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/sessionbeans/CommentFacade.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/entityclasses/User.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/web/SignUp.xhtml</file>
             <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/web/NewPost.xhtml</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/managers/LoginManager.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/managers/Constants.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/sessionbeans/UserFacade.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/managers/AccountManager.java</file>
             <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/web/index.xhtml</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/sessionbeans/PostFacade.java</file>
-            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/src/java/com/perfectblog/sessionbeans/AbstractFacade.java</file>
+            <file>file:/Users/Onder/NetBeansProjects/PerfectBlog/web/resources/js/post.js</file>
         </group>
     </open-files>
 </project-private>
