@@ -12,15 +12,16 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
 
         <ui:define name="editableContent">
             <div align="center">
+                <h:form id="formId">
+                    <h:inputHidden id="postInput" value="#{postManager.clickedPostId};"/> 
+                </h:form>
                 <script>
                     var myData = localStorage['objectToPass'];
-                    document.getElementById("postInput").value = myData;
-                    alert(document.getElementById("postInput").value);
+                    document.getElementById("formId:postInput").value = myData;
 
-                </script> 
-                <h:inputHidden id="postInput" binding="#{input1}"/>   
-                <h:outputText value="#{postManager.displaySinglePost(input1.value)}" escape="false" />
-
+                </script>          
+                  
+                <h:outputText value="#{postManager.displaySinglePost()}" escape="false" />
 
                 <h:form enctype="multipart/form-data">
                     <h4 >Add Comment</h4>

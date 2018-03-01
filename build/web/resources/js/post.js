@@ -5,8 +5,7 @@
 
 var postId;
 
-function postClicked(id) {
-    this.postId = id;    
+function postClicked(id) {  
     localStorage.setItem( 'objectToPass', id );
     location.href = 'ReadPost.xhtml';
 }

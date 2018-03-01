@@ -22,6 +22,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
 
 @Named(value = "postManager")
@@ -255,6 +256,7 @@ public class PostManager implements Serializable {
             String userInfo = "Posted By: " + post.getUserId().getFirstName() + " " + post.getUserId().getLastName();
             String imageInfo = "<img style=\"height: 300px; display: block; width: auto; align: center;\""
                     + "src=\"" + post.getImagePath() + "\"/>";
+            
             String jsMethod = "<div onclick=\"postClicked(" + i + ");\" style=\"cursor: pointer;\">";
 
             htmlBuilder.append(jsMethod);
@@ -271,25 +273,31 @@ public class PostManager implements Serializable {
 
     }
 
-    public String displaySinglePost(int i) {
-
+    public String displaySinglePost() {
+        
+//        RequestContext.getCurrentInstance().execute("var myData = localStorage['objectToPass'];\n" +
+//"                    document.getElementById(\"formId:postInput\").value = myData;"
+//                + "alert(document.getElementById(\"formId:postInput\").value);");
+        System.out.println(clickedPostId);
+        int i = 0;
+        
+        RequestContext.getCurrentInstance().addCallbackParam(message, i);
+        
         StringBuilder htmlBuilder = new StringBuilder();
         List<Post> postList = postFacade.findAll();
         Post post = postList.get(i);
 
         String userInfo = "Posted By: " + post.getUserId().getFirstName() + " " + post.getUserId().getLastName();
-        String imageInfo = "<img style=\"height: 300px; display: block; width: auto; align: center;\""
+        String imageInfo = "<img style=\"height: 400px; display: block; width: auto; align: center;\""
                 + "src=\"" + post.getImagePath() + "\"/>";
-        String jsMethod = "<div onclick=\"postClicked(" + i + ");\" style=\"cursor: pointer;\">";
 
-        htmlBuilder.append(jsMethod);
         htmlBuilder.append("<br/>");
         htmlBuilder.append("<p>" + userInfo + "</p>");
         htmlBuilder.append("<br/>");
         htmlBuilder.append(imageInfo);
         htmlBuilder.append("<textarea style=\"margin-top: 10px; border: none;\" rows=\"20\" cols=\"70\">" + post.getPostText() + "</textArea>");
         htmlBuilder.append("<br/>");
-        htmlBuilder.append("<br/></div>");
+        htmlBuilder.append("<br/>");
 
         List<Comment> commentList = commentFacade.findCommentsByPostId(i+1);
         

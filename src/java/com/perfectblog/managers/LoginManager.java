@@ -120,5 +120,9 @@ public class LoginManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("user_id", user.getId());
     }
+    
+    public String cancel(){
+        return "index.xhtml?faces-redirect=true";
+    }
 
 }

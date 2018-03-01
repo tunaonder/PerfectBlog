@@ -26,7 +26,7 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
                         </h:panelGrid>
                         <br/>                                      
                         <h:commandButton id="loginButton" action="#{loginManager.loginUser()}" value="Login" styleClass="btn login-btn"/>
-                        <h:commandButton id="loginCancelButton" action="#{loginManager}" value="Cancel" styleClass="btn login-btn"/>                   
+                        <h:commandButton id="loginCancelButton" action="#{loginManager.cancel()}" value="Cancel" styleClass="btn login-btn"/>                   
                     </div>
                     <br/>
                     <!--Error Message Label-->
