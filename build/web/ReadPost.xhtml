@@ -16,11 +16,12 @@ Copyright © 2018 Sait Tuna Onder. All rights reserved.
                     <h:inputHidden id="postInput" value="#{postManager.clickedPostId};"/> 
                 </h:form>
                 <script>
-                    var myData = localStorage['objectToPass'];
-                    document.getElementById("formId:postInput").value = myData;
-
+                    document.addEventListener("DOMContentLoaded", function (event) {
+                        var myData = localStorage['objectToPass'];
+                        document.getElementById("formId:postInput").value = myData;
+                    });
                 </script>          
-                  
+
                 <h:outputText value="#{postManager.displaySinglePost()}" escape="false" />
 
                 <h:form enctype="multipart/form-data">
